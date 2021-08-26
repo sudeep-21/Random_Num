@@ -6,3 +6,7 @@
     -fx-font-size: 30;
     -fx-text-fill: #009000;
 }
+
+#error {
+    -fx-text-fill: #FF0000;
+}

@@ -14,6 +14,7 @@ public class WindowManager extends Application {
         Label heading = new Label("Random Number Generator");
         Label minTxt = new Label("Minimum value: ");
         Label maxTxt = new Label("Maximum value: ");
+        Label error = new Label("Max value should be greater than minimum.");
 
         TextField maxField = new TextField();
         TextField minField = new TextField();
@@ -32,6 +33,7 @@ public class WindowManager extends Application {
         HBox buttons = new HBox(150);
 
         heading.setId("heading");
+
         maxField.setPrefWidth(200);
         minField.setPrefWidth(200);
         numItems.setMaxWidth(300);
@@ -41,17 +43,56 @@ public class WindowManager extends Application {
         numItems.setMajorTickUnit(1);
         numItems.setSnapToTicks(true);
         answer.setMaxWidth(350);
+        error.setId("error");
+        error.setVisible(false);
+
+        submit.setOnMouseClicked(mouseEvent -> {
+            int min = 0, max = 0, num = 0;
+            String finalans;
+            StringBuffer buffer = new StringBuffer();
+
+            answer.setText("");
+            error.setVisible(false);
+
+            if (minField.getText().equals("")) {
+                minField.setText("1");
+                min = Integer.valueOf(minField.getText());
+            }
+            if (maxField.getText().equals("")) {
+                error.setVisible(true);
+            } else {
+                max = Integer.valueOf(maxField.getText());
+            }
+            num = (int)(numItems.getValue());
+            int[] ans = new int[num];
+
+            for (int i = 0; i < num; i++) {
+                ans[i] = (int)(Math.random() * ((max - min + 1) + min));
+                buffer.append(ans[i] + "\n");
+            }
+            finalans = buffer.toString();
+            answer.setText(finalans);
+        });
+
+        reset.setOnMouseClicked(mouseEvent -> {
+            minField.setText("");
+            maxField.setText("");
+            numItems.setValue(1);
+            answer.setText("");
+        });
 
         minitems.getChildren().addAll(minTxt, minField);
         maxitems.getChildren().addAll(maxTxt, maxField);
         minmax.getChildren().addAll(minitems, maxitems);
         minitems.setAlignment(Pos.BASELINE_CENTER);
         maxitems.setAlignment(Pos.BASELINE_CENTER);
+
         buttons.getChildren().addAll(submit, reset);
         buttons.setAlignment(Pos.BASELINE_CENTER);
-        root.getChildren().addAll(heading, minmax, numItems, buttons, answer);
+
+        root.getChildren().addAll(heading, minmax, numItems, buttons, answer, error);
         root.setAlignment(Pos.TOP_CENTER);
-        Scene main = new Scene(root, 450, 600);
+        Scene main = new Scene(root, 450, 620);
 
         main.getStylesheets().addAll(this.getClass().getResource("/styles/styles.css").toExternalForm());
 
