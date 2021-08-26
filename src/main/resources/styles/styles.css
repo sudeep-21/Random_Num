@@ -1,0 +1,8 @@
+.root {
+    -fx-font-size: 20;
+}
+
+#heading {
+    -fx-font-size: 30;
+    -fx-text-fill: #009000;
+}
