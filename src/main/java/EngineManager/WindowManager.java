@@ -47,7 +47,7 @@ public class WindowManager extends Application {
         error.setVisible(false);
 
         submit.setOnMouseClicked(mouseEvent -> {
-            int min = 0, max = 0, num = 0;
+            int min = 0, max = 0, num = 0, temp = 0;
             String finalans;
             StringBuffer buffer = new StringBuffer();
 
@@ -67,7 +67,8 @@ public class WindowManager extends Application {
             int[] ans = new int[num];
 
             for (int i = 0; i < num; i++) {
-                ans[i] = (int)(Math.random() * ((max - min + 1) + min));
+                temp =  (int)(Math.random() * ((max - min + 1) + min) + 1);
+                ans[i] = temp;
                 buffer.append(ans[i] + "\n");
             }
             finalans = buffer.toString();
